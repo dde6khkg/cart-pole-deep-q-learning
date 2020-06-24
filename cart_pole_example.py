@@ -7,6 +7,11 @@ from keras.layers import Dense
 from keras.optimizers import Adam
 import os
 
+
+os.environ['CUDA_DEVICE_ORDER'] = 'PCI_BUS_ID'
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+
+
 env = gym.make('CartPole-v0')
 state_size = env.observation_space.shape[0]
 action_size = env.action_space.n
@@ -38,7 +43,7 @@ class DQNAgent:
     def _build_model(self):
         model = Sequential()
 
-        model.add(Dense(42, input_dim=self.state_size, activation='relu'))
+        model.add(Dense(24, input_dim=self.state_size, activation='relu'))
         model.add(Dense(24, activation='relu'))
         model.add(Dense(self.action_size, activation='linear'))
         model.compile(loss='mse', optimizer=Adam(lr=self.learning_rate))
